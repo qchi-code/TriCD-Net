@@ -37,5 +37,7 @@ The pretrained checkpoints for all three datasets are provided via the following
 3. Run `./script/train_CHAOST2.sh` 
 Please note that you need to modify the source domain yourself.
 
+### Activation Map Visualization
+We also provide visualization code for inspecting the activation maps. Using the same visualization pipeline, comparable results for the variant without FEBR can be obtained simply by disabling the FEBR module, since the difference mainly comes from the feature refinement introduced by FEBR itself.
 
 ### Citation
