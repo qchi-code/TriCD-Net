@@ -3,6 +3,7 @@
 For evaluation
 """
 import os
+os.environ["GIT_PYTHON_REFRESH"] = "quiet"
 import shutil
 import SimpleITK as sitk
 import torch.backends.cudnn as cudnn
@@ -49,7 +50,7 @@ def main(_run, _config, _log):
     _log.info(f'Create model...')
     model = FewShotSeg()
     model.cuda()
-    # model.load_state_dict(torch.load(_config['reload_model_path'], map_location='cpu'))
+    model.load_state_dict(torch.load(_config['reload_model_path'], map_location='cpu'))
 
     _log.info(f'Load data...')
     data_config = {
@@ -73,7 +74,7 @@ def main(_run, _config, _log):
                              num_workers=_config['num_workers'],
                              pin_memory=True,
                              drop_last=True)
-
+                             
     print("Setting1=" + str(_config['Setting1']))
     # Get unique labels (classes).
     labels = get_label_names(_config['dataset'])
@@ -81,9 +82,6 @@ def main(_run, _config, _log):
     # Loop over classes.
     class_dice = {}
     class_iou = {}
-    class_hd95 = {}
-    class_asd = {}
-    class_dice1 = {}
 
     _log.info(f'Starting validation...')
     for label_val, label_name in labels.items():
@@ -110,8 +108,7 @@ def main(_run, _config, _log):
 
             # Unpack support data.
             support_image = [support_sample['image'][[i]].float().cuda() for i in
-                             range(support_sample['image'].shape[
-                                       0])]  # n_shot x 3 x H x W, support_image is a list {3X(1, 3, 256, 256)}
+                             range(support_sample['image'].shape[0])]  # n_shot x 3 x H x W, support_image is a list {3X(1, 3, 256, 256)}
             support_fg_mask = [support_sample['label'][[i]].float().cuda() for i in
                                range(support_sample['image'].shape[0])]  # n_shot x H x W
 
@@ -129,7 +126,7 @@ def main(_run, _config, _log):
                 if _config['Setting1'] is True:
                     # Match support slice and query sub-chunck.
                     query_pred = torch.zeros(query_label.shape[-3:])
-                    C_q = sample['image'].shape[1]  # slice number of query img
+                    C_q = sample['image'].shape[1]    # slice number of query img
 
                     idx_ = np.linspace(0, C_q, _config['n_part'] + 1).astype('int')
                     for sub_chunck in range(_config['n_part']):  # n_part = 3
@@ -138,8 +135,7 @@ def main(_run, _config, _log):
                         query_image_s = query_image[0][idx_[sub_chunck]:idx_[sub_chunck + 1]]  # C' x 3 x H x W
                         query_pred_s = []
                         for i in range(query_image_s.shape[0]):
-                            _pred_s, _, _ = model([support_image_s], [support_fg_mask_s], [query_image_s[[i]]],
-                                                  train=False)
+                            _pred_s, _, _ = model([support_image_s], [support_fg_mask_s], [query_image_s[[i]]], train=False)
                             query_pred_s.append(_pred_s)
                         query_pred_s = torch.cat(query_pred_s, dim=0)  # [9, 2, 256, 256]  [9, 2, 256, 256]
                         query_pred_s = query_pred_s.argmax(dim=1).cpu()  # C x H x W   [9, 256, 256]
@@ -149,10 +145,9 @@ def main(_run, _config, _log):
                 else:
                     query_image_s = query_image[0]
                     query_pred_s = []
-
+ 
                     for i in range(query_image_s.shape[0]):
-                        _pred_s, _, _ = model([support_image], [support_fg_mask], [query_image_s[[i]]],
-                                              train=False)  # 1 x 2 x H x W
+                        _pred_s, _, _ = model([support_image], [support_fg_mask], [query_image_s[[i]]], train=False)  # 1 x 2 x H x W
                         query_pred_s.append(_pred_s)
 
                     query_pred_s = torch.cat(query_pred_s, dim=0)
@@ -176,26 +171,17 @@ def main(_run, _config, _log):
             # Log class-wise results
             class_dice[label_name] = torch.tensor(scores.patient_dice).mean().item()
             class_iou[label_name] = torch.tensor(scores.patient_iou).mean().item()
-            class_dice1[label_name] = torch.tensor(scores.patient_dice1).mean().item()
-            class_hd95[label_name] = torch.tensor(scores.patient_hd95).mean().item()
-            class_asd[label_name] = torch.tensor(scores.patient_asd).mean().item()
             _log.info(f'Test Class: {label_name}')
             _log.info(f'Mean class IoU: {class_iou[label_name]}')
             _log.info(f'Mean class Dice: {class_dice[label_name]}')
-            _log.info(f'Mean class Dice1: {class_dice1[label_name]}')
-            _log.info(f'Mean class HD95: {class_hd95[label_name]}')
-            _log.info(f'Mean class ASD: {class_asd[label_name]}')
 
     _log.info(f'Final results...')
     _log.info(f'Mean IoU: {class_iou}')
     _log.info(f'Mean Dice: {class_dice}')
-    _log.info(f'Mean Dice1: {class_dice1}')
-    _log.info(f'Mean HD95: {class_hd95}')
-    _log.info(f'Mean ASD: {class_asd}')
 
     def dict_Avg(Dict):
-        L = len(Dict)  # 取字典中键值对的个数
-        S = sum(Dict.values())  # 取字典中键对应值的总和
+        L = len(Dict)  #
+        S = sum(Dict.values())  #
         A = S / L
         return A
 

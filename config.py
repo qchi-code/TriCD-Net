@@ -48,7 +48,7 @@ def cfg():
     test_label = [1, 2, 3, 4]  # for evaluation
     supp_idx = 0  # choose which case as the support set for evaluation, (0-4) for 'CHAOST2', (0-7) for 'CMR'
     n_part = 3  # for evaluation, i.e. 3 chunks
-    Setting1 = False
+
     ## training
     n_steps = 30000
     batch_size = 1
@@ -64,7 +64,7 @@ def cfg():
     max_iters_per_load = 1000  # epoch size, interval for reloading the dataset
     # Network
     reload_model_path = None
-
+    Setting1 = False
     optim_type = 'sgd'
     optim = {
         'lr': 1e-3,
@@ -79,9 +79,9 @@ def cfg():
 
     path = {
         'log_dir': './runs',
-        'CHAOST2': {'data_dir': 'E:/medical_code/Data_preprocessing/CHAOST2'},
-        'SABS': {'data_dir': 'E:/medical_code/Data_preprocessing/SABS'},
-        'CMR': {'data_dir': 'E:/medical_code/Data_preprocessing/CMR'},
+        'CHAOST2': {'data_dir': '/home/ac/data/cq/RPT-main/data/CHAOST2'},
+        'SABS': {'data_dir': '/home/ac/data/cq/RPT-main/data/SABS'},
+        'CMR': {'data_dir': '/home/ac/data/cq/RPT-main/data/CMR'},
     }
 
 

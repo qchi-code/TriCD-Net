@@ -1,4 +1,3 @@
-# boundary loss code from https://github.com/yiskw713/boundary_loss_for_remote_sensing
 
 import torch
 import torch.nn as nn

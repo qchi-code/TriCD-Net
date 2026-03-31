@@ -1,7 +1,4 @@
-"""
-Utils for Dataset
-Extended from ADNet code by Hansen et al.
-"""
+
 import random
 import torch
 import numpy as np
@@ -9,8 +6,6 @@ import operator
 import os
 import logging
 import cv2
-from medpy import metric
-
 def fix_randseed(seed):
     r""" Set random seeds for reproducibility """
     if seed is None:
@@ -98,9 +93,6 @@ class Scores():
 
         self.patient_dice = []
         self.patient_iou = []
-        self.patient_hd95 = []
-        self.patient_asd = []
-        self.patient_dice1 = []
 
     def record(self, preds, label):
         assert len(torch.unique(preds)) < 3
@@ -112,9 +104,6 @@ class Scores():
 
         self.patient_dice.append(2 * tp / (2 * tp + fp + fn))
         self.patient_iou.append(tp / (tp + fp + fn))
-        self.patient_hd95.append(metric.binary.hd95(preds.numpy(), label.squeeze().numpy()))
-        self.patient_asd.append(metric.binary.asd(preds.numpy(), label.squeeze().numpy()))
-        self.patient_dice1.append(metric.binary.dc(preds.numpy(), label.squeeze().numpy()))
 
         self.TP += tp
         self.TN += tn
