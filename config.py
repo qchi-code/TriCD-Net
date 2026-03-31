@@ -55,7 +55,7 @@ def cfg():
     n_shot = 1
     n_way = 1
     n_query = 1
-    lr_step_gamma = 0.95
+    lr_step_gamma = 0.98
     bg_wt = 0.1
     t_loss_scaler = 0.0
     ignore_label = 255
@@ -79,9 +79,9 @@ def cfg():
 
     path = {
         'log_dir': './runs',
-        'CHAOST2': {'data_dir': '/home/ac/data/cq/RPT-main/data/CHAOST2'},
-        'SABS': {'data_dir': '/home/ac/data/cq/RPT-main/data/SABS'},
-        'CMR': {'data_dir': '/home/ac/data/cq/RPT-main/data/CMR'},
+        'CHAOST2': {'data_dir': '/home/ac/data/CHAOST2'},
+        'SABS': {'data_dir': '/home/ac/data/SABS'},
+        'CMR': {'data_dir': '/home/ac/data/CMR'},
     }
 
 
