@@ -145,7 +145,7 @@ def odconv1x1(in_planes, out_planes, stride=1, reduction=0.0625, kernel_num=1):
                     reduction=reduction, kernel_num=kernel_num)
 
 
-# 输入 N C H W,  输出 N C H W
+
 if __name__ == '__main__':
     dconv3x3 = odconv3x3(64, 64).cuda()
     input = torch.rand(1, 64, 32, 32).cuda()

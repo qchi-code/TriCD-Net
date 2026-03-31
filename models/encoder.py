@@ -14,9 +14,9 @@ class Res101Encoder(nn.Module):
         # using pretrained model's weights
         if pretrained_weights == 'deeplabv3':
             self.pretrained_weights = torch.load(
-                "E:/medical_code/RPT-main/checkpoints/deeplabv3_resnet101_coco-586e9e4e.pth", map_location='cpu')
+                "/home/cq/medical_code/Tri-main/checkpoints/deeplabv3_resnet101_coco-586e9e4e.pth", map_location='cpu')
         elif pretrained_weights == 'resnet101':
-            self.pretrained_weights = torch.load("/home/cs4007/data/zyz/RPT-main/checkpoints/resnet101-63fe2227.pth",
+            self.pretrained_weights = torch.load("/home/cq/medical_code/Tri-main/checkpoints/resnet101-63fe2227.pth",
                                                  map_location='cpu')
         else:
             self.pretrained_weights = pretrained_weights
@@ -32,25 +32,25 @@ class Res101Encoder(nn.Module):
 
     def forward(self, x):
         features = dict()
-        x = self.backbone["conv1"](x)  #  torch.Size([2, 64, 128, 128])
-        x = self.backbone["bn1"](x)  # torch.Size([2, 64, 128, 128])
+        x = self.backbone["conv1"](x)
+        x = self.backbone["bn1"](x)
         x = self.backbone["relu"](x)
-        x = self.backbone["maxpool"](x)  # torch.Size([2, 64, 64, 64])
-        x = self.backbone["layer1"](x)  # torch.Size([2, 256, 64, 64])
+        x = self.backbone["maxpool"](x)
+        x = self.backbone["layer1"](x)
         features["layer1"] = x
-        x = self.backbone["layer2"](x)  # torch.Size([2, 512, 64, 64])
+        x = self.backbone["layer2"](x)
         features["layer2"] = x
-        x = self.backbone["layer3"](x)  # torch.Size([2, 1024, 64, 64])
+        x = self.backbone["layer3"](x)
         features["layer3"] = x
         # feature = self.reduce1(x)  # (2, 512, 64, 64)
-        x = self.backbone["layer4"](x)  # torch.Size([2, 2048, 32, 32])
+        x = self.backbone["layer4"](x)
         features["layer4"] = x
 
-        # feature map -> avgpool -> fc -> single value
-        t = self.backbone["avgpool"](x)  # torch.Size([2, 2048, 1, 1])
-        t = torch.flatten(t, 1)  # torch.Size([2, 2048])
-        t = self.backbone["fc"](t)  # torch.Size([2, 1000])
-        t = self.reduce1d(t)  # torch.Size([2, 1])
+        # # feature map -> avgpool -> fc -> single value
+        t = self.backbone["avgpool"](x)
+        t = torch.flatten(t, 1)
+        t = self.backbone["fc"](t)
+        t = self.reduce1d(t)
         return (features, t)
 
     def _init_weights(self):
@@ -83,9 +83,9 @@ class Res50Encoder(nn.Module):
         # using pretrained model's weights
         if pretrained_weights == 'deeplabv3':
             self.pretrained_weights = torch.load(
-                "E:/medical_code/RPT-main/checkpoints/deeplabv3_resnet50_coco-cd0a2569.pth", map_location='cpu')  # pretrained on COCO
+                "/home/cq/medical_code/Tri-main/checkpoints/deeplabv3_resnet50_coco-cd0a2569.pth", map_location='cpu')  # pretrained on COCO
         elif pretrained_weights == 'resnet50':
-            self.pretrained_weights = torch.load("/home/cs4007/data/zyz/CDFSMIS/checkpoints/resnet50-19c8e357.pth",
+            self.pretrained_weights = torch.load("/home/cq/medical_code/Tri-main/checkpoints/resnet50-19c8e357.pth",
                                                  map_location='cpu')  # pretrained on ImageNet
         else:
             self.pretrained_weights = pretrained_weights
