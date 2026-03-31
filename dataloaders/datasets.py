@@ -1,7 +1,4 @@
-"""
-Dataset for Training and Test
-Extended from ADNet code by Hansen et al.
-"""
+
 from collections import deque
 
 import torch
@@ -61,13 +58,12 @@ class TestDataset(Dataset):
 
         sample = {'id': img_path}
 
-        # Evaluation protocol.
         if self.EP1:
             idx = lbl.sum(axis=(1, 2)) > 0
             sample['image'] = torch.from_numpy(img[idx])
             sample['label'] = torch.from_numpy(lbl[idx])
         else:
-
+            
             sample['image'] = torch.from_numpy(img)
             sample['label'] = torch.from_numpy(lbl)
 

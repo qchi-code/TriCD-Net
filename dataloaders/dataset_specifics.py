@@ -1,7 +1,4 @@
-"""
-Dataset Specifics
-Extended from ADNet code by Hansen et al.
-"""
+
 
 import torch
 import random

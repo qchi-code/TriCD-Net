@@ -1,7 +1,4 @@
-"""
-Dataset for Training and Test
-Extended from ADNet code by Hansen et al.
-"""
+
 import torch
 from torch.utils.data import Dataset
 import torchvision.transforms as deftfx
