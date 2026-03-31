@@ -11,12 +11,12 @@ TEST_LABEL=[1,2,3,6]
 EXCLUDE_LABEL=None
 USE_GT=False
 ###### Training configs ######
-NSTEP=40000
+NSTEP=30000
 DECAY=0.98
 
-MAX_ITER=5000 # defines the size of an epoch
-SNAPSHOT_INTERVAL=5000 # interval for saving snapshot
-SEED=2023
+MAX_ITER=1000 # defines the size of an epoch
+SNAPSHOT_INTERVAL=30000 # interval for saving snapshot
+SEED=2025
 
 echo ========================================================================
 
@@ -24,7 +24,7 @@ for EVAL_FOLD in "${ALL_EV[@]}"
 do
   PREFIX="train_${DATASET}_cv${EVAL_FOLD}"
   echo $PREFIX
-  LOGDIR="./exps_on_${DATASET}_fewshot_setting1"
+  LOGDIR="./exps_on_${DATASET}_fewshot"
 
   if [ ! -d $LOGDIR ]
   then

@@ -1,5 +1,5 @@
 #!/bin/bash
-GPUID1=1
+GPUID1=2
 export CUDA_VISIBLE_DEVICES=$GPUID1
 
 ###### Shared configs ######
