@@ -40,4 +40,6 @@ Please note that you need to modify the source domain yourself.
 ### Activation Map
 We also provide visualization code for inspecting the activation maps. Using the same visualization pipeline, comparable results for the variant without FEBR can be obtained simply by disabling the FEBR module, since the difference mainly comes from the feature refinement introduced by FEBR itself.
 
+<img width="400" height="343" alt="图片1" src="https://github.com/user-attachments/assets/c7276ac9-7df9-4ef6-b8b3-f4ee581742ec" />
+
 ### Citation
