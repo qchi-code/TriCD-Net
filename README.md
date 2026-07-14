@@ -29,7 +29,6 @@ Download:
 Pre-processing is performed according to [Ouyang et al.](https://github.com/cheng-01037/Self-supervised-Fewshot-Medical-Image-Segmentation/tree/2f2a22b74890cb9ad5e56ac234ea02b9f1c7a535) and we follow the procedure on their github repository.
 
 ### Pretrained Model Weights
-The pretrained checkpoints for all three datasets are provided via the following [Google Drive](https://drive.google.com/file/d/15O7AL3IMs-FMCocaCaSA_F7ciZSBtIXF/view?usp=drive_link) link for testing and evaluation. Please download the archive manually and extract it locally before use.
 
 ### Training
 1. Compile `./data/supervoxels/felzenszwalb_3d_cy.pyx` with cython (`python ./data/supervoxels/setup.py build_ext --inplace`) and run `./data/supervoxels/generate_supervoxels.py` 
@@ -38,8 +37,5 @@ The pretrained checkpoints for all three datasets are provided via the following
 Please note that you need to modify the source domain yourself.
 
 ### Activation Map
-We also provide visualization code for inspecting the activation maps. Using the same visualization pipeline, comparable results for the variant without FEBR can be obtained simply by disabling the FEBR module, since the difference mainly comes from the feature refinement introduced by FEBR itself.
-
-<img width="400" height="343" alt="图片1" src="https://github.com/user-attachments/assets/c7276ac9-7df9-4ef6-b8b3-f4ee581742ec" />
 
 ### Citation
